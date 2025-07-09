@@ -57,6 +57,8 @@ const server = http.createServer((req, res) => {
       try {
         const parsedData = JSON.parse(buffer);
         const pernerList = parsedData.perner; // Array of perner strings
+        const startDate = parsedData.startDate;
+        const endDate = parsedData.endDate;
 
         if (!Array.isArray(pernerList)) {
           res.writeHead(400, { 'Content-Type': 'application/json' });
@@ -64,9 +66,36 @@ const server = http.createServer((req, res) => {
           return;
         }
 
-        // Insert data perner ke database
-        const values = pernerList.map(perner => [perner]);
-        const sql = 'INSERT INTO olah_absensi (perner) VALUES ?';
+        if (!startDate || !endDate) {
+          res.writeHead(400, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: 'StartDate dan EndDate harus diisi' }));
+          return;
+        }
+
+        // Fungsi untuk menghasilkan array tanggal dari startDate sampai endDate
+        function getDateRange(start, end) {
+          const dateArray = [];
+          let currentDate = new Date(start);
+          const stopDate = new Date(end);
+
+          while (currentDate <= stopDate) {
+            dateArray.push(currentDate.toISOString().slice(0, 10));
+            currentDate.setDate(currentDate.getDate() + 1);
+          }
+          return dateArray;
+        }
+
+        const dateRange = getDateRange(startDate, endDate);
+
+        // Buat kombinasi perner dan tanggal
+        const values = [];
+        pernerList.forEach(perner => {
+          dateRange.forEach(date => {
+            values.push([perner, date]);
+          });
+        });
+
+        const sql = 'INSERT INTO olah_absensi (perner, tanggal) VALUES ?';
 
         db.query(sql, [values], (err, result) => {
           if (err) {

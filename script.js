@@ -27,9 +27,23 @@ function cekData(inputId) {
         resultBox.textContent = 'Mengirim data ke server...';
 
         const pernerData = textarea.value.trim();
+        const startDate = document.getElementById('startDate').value;
+        const endDate = document.getElementById('endDate').value;
+
         if (pernerData === '') {
             resultBox.className = 'result-box error';
             resultBox.textContent = 'Error: Data tidak boleh kosong!';
+            validationStatus[inputId] = false;
+            inputSection.classList.remove('validated');
+            cekButton.textContent = 'SUBMIT';
+            cekButton.disabled = false;
+            updateSubmitButton();
+            return;
+        }
+
+        if (!startDate || !endDate) {
+            resultBox.className = 'result-box error';
+            resultBox.textContent = 'Error: Start Date dan End Date harus diisi!';
             validationStatus[inputId] = false;
             inputSection.classList.remove('validated');
             cekButton.textContent = 'SUBMIT';
@@ -47,7 +61,7 @@ function cekData(inputId) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ perner: pernerList })
+            body: JSON.stringify({ perner: pernerList, startDate: startDate, endDate: endDate })
         })
         .then(response => response.json())
         .then(data => {

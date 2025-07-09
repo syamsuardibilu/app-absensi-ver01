@@ -16,13 +16,19 @@
             <form id="absensiForm">
                 <!-- DATA PEGAWAI -->
                 <div class="input-section">
-                    <label for="dataPegawai">DATA PEGAWAI</label>
-                    <textarea id="dataPegawai" placeholder="Paste data pegawai di sini..."></textarea>
-                    <div class="button-group">
-                        <button type="button" class="btn-cek" onclick="cekData('dataPegawai')">CEK</button>
-                        <button type="button" class="btn-hapus" onclick="hapusData('dataPegawai')">HAPUS</button>
-                        <div class="result-box" id="result-dataPegawai"></div>
-                    </div>
+                <label for="dataPegawai">DATA PEGAWAI</label>
+                <textarea id="dataPegawai" placeholder="Paste data pegawai di sini..."></textarea>
+                <div class="date-inputs">
+                    <label for="startDate">START DATE:</label>
+                    <input type="date" id="startDate" name="startDate" />
+                    <label for="endDate">END DATE:</label>
+                    <input type="date" id="endDate" name="endDate" />
+                </div>
+                <div class="button-group">
+                    <button type="button" class="btn-cek" onclick="cekData('dataPegawai')">SUBMIT</button>
+                    <button type="button" class="btn-hapus" onclick="hapusData('dataPegawai')">HAPUS</button>
+                    <div class="result-box" id="result-dataPegawai"></div>
+                </div>
                 </div>
 
                 <!-- DATA HARI LIBUR -->
