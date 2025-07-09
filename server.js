@@ -72,7 +72,7 @@ const server = http.createServer((req, res) => {
           if (err) {
             console.error('Error saat insert data:', err);
             res.writeHead(500, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ error: 'Gagal menyimpan data ke database' }));
+            res.end(JSON.stringify({ error: 'Gagal menyimpan data ke database: ' + err.message }));
           } else {
             res.writeHead(200, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ message: 'Data berhasil disimpan', insertedRows: result.affectedRows }));
