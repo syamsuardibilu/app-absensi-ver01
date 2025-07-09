@@ -3,9 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>App Absensi Ver01</title>
+    <title>Aplikasi Pengelola Absensi Pegawai</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Hello World</h1>
+    <div class="container">
+        <header>
+            <h1>APLIKASI PENGELOLA ABSENSI PEGAWAI</h1>
+        </header>
+
+        <main>
+            <form id="absensiForm">
+                <!-- DATA PEGAWAI -->
+                <div class="input-section">
+                    <label for="dataPegawai">DATA PEGAWAI</label>
+                    <textarea id="dataPegawai" placeholder="Paste data pegawai di sini..."></textarea>
+                    <div class="button-group">
+                        <button type="button" class="btn-cek" onclick="cekData('dataPegawai')">CEK</button>
+                        <button type="button" class="btn-hapus" onclick="hapusData('dataPegawai')">HAPUS</button>
+                        <div class="result-box" id="result-dataPegawai"></div>
+                    </div>
+                </div>
+
+                <!-- DATA HARI LIBUR -->
+                <div class="input-section">
+                    <label for="dataHariLibur">DATA HARI LIBUR</label>
+                    <textarea id="dataHariLibur" placeholder="Paste data hari libur di sini..."></textarea>
+                    <div class="button-group">
+                        <button type="button" class="btn-cek" onclick="cekData('dataHariLibur')">CEK</button>
+                        <button type="button" class="btn-hapus" onclick="hapusData('dataHariLibur')">HAPUS</button>
+                        <div class="result-box" id="result-dataHariLibur"></div>
+                    </div>
+                </div>
+
+                <!-- CI CO DAILY -->
+                <div class="input-section">
+                    <label for="ciCoDaily">CI CO DAILY</label>
+                    <textarea id="ciCoDaily" placeholder="Paste data CI CO Daily di sini..."></textarea>
+                    <div class="button-group">
+                        <button type="button" class="btn-cek" onclick="cekData('ciCoDaily')">CEK</button>
+                        <button type="button" class="btn-hapus" onclick="hapusData('ciCoDaily')">HAPUS</button>
+                        <div class="result-box" id="result-ciCoDaily"></div>
+                    </div>
+                </div>
+
+                <!-- ATT ABS DAILY -->
+                <div class="input-section">
+                    <label for="attAbsDaily">ATT ABS DAILY</label>
+                    <textarea id="attAbsDaily" placeholder="Paste data ATT ABS Daily di sini..."></textarea>
+                    <div class="button-group">
+                        <button type="button" class="btn-cek" onclick="cekData('attAbsDaily')">CEK</button>
+                        <button type="button" class="btn-hapus" onclick="hapusData('attAbsDaily')">HAPUS</button>
+                        <div class="result-box" id="result-attAbsDaily"></div>
+                    </div>
+                </div>
+
+                <!-- ATT ABS -->
+                <div class="input-section">
+                    <label for="attAbs">ATT ABS</label>
+                    <textarea id="attAbs" placeholder="Paste data ATT ABS di sini..."></textarea>
+                    <div class="button-group">
+                        <button type="button" class="btn-cek" onclick="cekData('attAbs')">CEK</button>
+                        <button type="button" class="btn-hapus" onclick="hapusData('attAbs')">HAPUS</button>
+                        <div class="result-box" id="result-attAbs"></div>
+                    </div>
+                </div>
+
+                <!-- ATT SAP -->
+                <div class="input-section">
+                    <label for="attSap">ATT SAP</label>
+                    <textarea id="attSap" placeholder="Paste data ATT SAP di sini..."></textarea>
+                    <div class="button-group">
+                        <button type="button" class="btn-cek" onclick="cekData('attSap')">CEK</button>
+                        <button type="button" class="btn-hapus" onclick="hapusData('attSap')">HAPUS</button>
+                        <div class="result-box" id="result-attSap"></div>
+                    </div>
+                </div>
+
+                <!-- SPPD UMUM -->
+                <div class="input-section">
+                    <label for="sppdUmum">SPPD UMUM</label>
+                    <textarea id="sppdUmum" placeholder="Paste data SPPD Umum di sini..."></textarea>
+                    <div class="button-group">
+                        <button type="button" class="btn-cek" onclick="cekData('sppdUmum')">CEK</button>
+                        <button type="button" class="btn-hapus" onclick="hapusData('sppdUmum')">HAPUS</button>
+                        <div class="result-box" id="result-sppdUmum"></div>
+                    </div>
+                </div>
+
+                <!-- WORK SCHEDULE -->
+                <div class="input-section">
+                    <label for="workSchedule">WORK SCHEDULE</label>
+                    <textarea id="workSchedule" placeholder="Paste data Work Schedule di sini..."></textarea>
+                    <div class="button-group">
+                        <button type="button" class="btn-cek" onclick="cekData('workSchedule')">CEK</button>
+                        <button type="button" class="btn-hapus" onclick="hapusData('workSchedule')">HAPUS</button>
+                        <div class="result-box" id="result-workSchedule"></div>
+                    </div>
+                </div>
+
+                <!-- SUBSTITUTION DAILY -->
+                <div class="input-section">
+                    <label for="substitutionDaily">SUBSTITUTION DAILY</label>
+                    <textarea id="substitutionDaily" placeholder="Paste data Substitution Daily di sini..."></textarea>
+                    <div class="button-group">
+                        <button type="button" class="btn-cek" onclick="cekData('substitutionDaily')">CEK</button>
+                        <button type="button" class="btn-hapus" onclick="hapusData('substitutionDaily')">HAPUS</button>
+                        <div class="result-box" id="result-substitutionDaily"></div>
+                    </div>
+                </div>
+
+                <!-- SUBSTITUTION SAP -->
+                <div class="input-section">
+                    <label for="substitutionSap">SUBSTITUTION SAP</label>
+                    <textarea id="substitutionSap" placeholder="Paste data Substitution SAP di sini..."></textarea>
+                    <div class="button-group">
+                        <button type="button" class="btn-cek" onclick="cekData('substitutionSap')">CEK</button>
+                        <button type="button" class="btn-hapus" onclick="hapusData('substitutionSap')">HAPUS</button>
+                        <div class="result-box" id="result-substitutionSap"></div>
+                    </div>
+                </div>
+
+                <!-- SUBMIT BUTTON -->
+                <div class="submit-section">
+                    <button type="submit" id="submitBtn" class="btn-submit" disabled>SUBMIT</button>
+                </div>
+            </form>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
