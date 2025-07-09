@@ -18,19 +18,80 @@ function cekData(inputId) {
     const resultBox = document.getElementById(`result-${inputId}`);
     const inputSection = textarea.closest('.input-section');
     const cekButton = inputSection.querySelector('.btn-cek');
-    
+
+    // Jika inputId adalah dataPegawai, maka tombol CEK diubah menjadi SUBMIT dan data dikirim ke server
+    if (inputId === 'dataPegawai') {
+        cekButton.textContent = 'SUBMIT';
+        cekButton.disabled = true;
+        resultBox.className = 'result-box info';
+        resultBox.textContent = 'Mengirim data ke server...';
+
+        const pernerData = textarea.value.trim();
+        if (pernerData === '') {
+            resultBox.className = 'result-box error';
+            resultBox.textContent = 'Error: Data tidak boleh kosong!';
+            validationStatus[inputId] = false;
+            inputSection.classList.remove('validated');
+            cekButton.textContent = 'SUBMIT';
+            cekButton.disabled = false;
+            updateSubmitButton();
+            return;
+        }
+
+        // Pisahkan data perner menjadi array
+        const pernerList = pernerData.split('\n').map(line => line.trim()).filter(line => line !== '');
+
+        // Kirim data ke backend
+        fetch('/api/data-pegawai', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ perner: pernerList })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                resultBox.className = 'result-box error';
+                resultBox.textContent = `✗ ${data.error}`;
+                validationStatus[inputId] = false;
+                inputSection.classList.remove('validated');
+            } else {
+                resultBox.className = 'result-box success';
+                resultBox.textContent = `✓ ${data.message} (Baris: ${pernerList.length})`;
+                validationStatus[inputId] = true;
+                inputSection.classList.add('validated');
+            }
+            cekButton.textContent = 'SUBMIT';
+            cekButton.disabled = false;
+            updateSubmitButton();
+        })
+        .catch(error => {
+            resultBox.className = 'result-box error';
+            resultBox.textContent = `✗ Gagal mengirim data: ${error.message}`;
+            validationStatus[inputId] = false;
+            inputSection.classList.remove('validated');
+            cekButton.textContent = 'SUBMIT';
+            cekButton.disabled = false;
+            updateSubmitButton();
+        });
+
+        return;
+    }
+
+    // Untuk input lain, proses validasi lokal seperti sebelumnya
     // Tambahkan loading state
     cekButton.classList.add('loading');
     cekButton.disabled = true;
-    
+
     // Reset result box
     resultBox.className = 'result-box';
     resultBox.textContent = 'Memproses...';
-    
+
     // Simulasi proses validasi (dalam implementasi nyata, ini bisa berupa API call)
     setTimeout(() => {
         const data = textarea.value.trim();
-        
+
         if (data === '') {
             // Data kosong
             resultBox.className = 'result-box error';
@@ -40,7 +101,7 @@ function cekData(inputId) {
         } else {
             // Validasi berdasarkan jenis data
             const validationResult = validateDataByType(inputId, data);
-            
+
             if (validationResult.isValid) {
                 resultBox.className = 'result-box success';
                 resultBox.textContent = `✓ ${validationResult.message}`;
@@ -53,11 +114,11 @@ function cekData(inputId) {
                 inputSection.classList.remove('validated');
             }
         }
-        
+
         // Hapus loading state
         cekButton.classList.remove('loading');
         cekButton.disabled = false;
-        
+
         // Update status tombol submit
         updateSubmitButton();
     }, 1000); // Simulasi delay 1 detik
